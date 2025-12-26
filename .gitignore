@@ -1,0 +1,18 @@
+# --- Java (Spring Boot) ---
+**/target/
+**/*.jar
+**/.mvn/
+**/mvnw
+**/mvnw.cmd
+**/.idea/
+
+# --- JavaScript (React) ---
+**/node_modules/
+**/build/
+**/dist/
+**/.env
+**/.DS_Store
+
+# --- System ---
+Thumbs.db
+desktop.ini
