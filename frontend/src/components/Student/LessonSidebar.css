@@ -1,0 +1,304 @@
+.lesson-sidebar {
+  width: 320px;
+  background: white;
+  border-right: 1px solid #e2e8f0;
+  height: 100%;
+  overflow-y: auto;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid #e2e8f0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.sidebar-header h3 {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.view-toggle-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 8px 15px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.view-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.total-lessons {
+  margin-top: 10px;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+/* Difficulty Groups */
+.difficulty-group {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.difficulty-header {
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border-left: 4px solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.difficulty-header:hover {
+  background: #f8fafc;
+}
+
+.difficulty-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.difficulty-icon {
+  font-size: 16px;
+}
+
+.difficulty-text {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.lesson-count {
+  font-size: 12px;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.difficulty-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.completion-bar {
+  width: 60px;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.completion-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.completion-text {
+  font-size: 12px;
+  color: #64748b;
+  min-width: 30px;
+}
+
+.toggle-icon {
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+/* Lesson List */
+.lesson-list {
+  padding: 0 10px 10px 10px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.lesson-item {
+  padding: 12px 15px;
+  margin: 5px 0;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.lesson-item:hover {
+  border-color: #3b82f6;
+  transform: translateX(3px);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+}
+
+.lesson-item.active {
+  border-color: #3b82f6;
+  background: #f0f9ff;
+}
+
+.lesson-item.completed {
+  opacity: 0.8;
+}
+
+.lesson-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.lesson-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lesson-icon {
+  font-size: 14px;
+}
+
+.lesson-title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e293b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lesson-meta {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.meta-tag {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.meta-tag.youtube {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.meta-tag.video {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.meta-tag.pdf {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.meta-tag.time {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.active-indicator {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.active-dot {
+  width: 8px;
+  height: 8px;
+  background: #3b82f6;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Completion Summary */
+.completion-summary {
+  margin-top: auto;
+  padding: 20px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.summary-icon {
+  font-size: 18px;
+}
+
+.summary-text {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.summary-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #3b82f6;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* Scrollbar Styling */
+.lesson-sidebar::-webkit-scrollbar,
+.lesson-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.lesson-sidebar::-webkit-scrollbar-track,
+.lesson-list::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.lesson-sidebar::-webkit-scrollbar-thumb,
+.lesson-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.lesson-sidebar::-webkit-scrollbar-thumb:hover,
+.lesson-list::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

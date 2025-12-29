@@ -8,9 +8,10 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
+
+    // Existing methods
     List<Lesson> findByCourse_CourseId(Long courseId);
 
-    // Existing method
     @Query("""
         SELECT l FROM Lesson l
         WHERE l.lessonId NOT IN (
@@ -26,7 +27,6 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
             @Param("courseId") Long courseId
     );
 
-    // NEW method using native SQL that works exactly like your psql query
     @Query(value = """
         SELECT * FROM lesson
         WHERE lesson_id NOT IN (
@@ -39,6 +39,30 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
             @Param("userId") Long userId,
             @Param("courseId") Long courseId
     );
+
+    // NEW: Get lessons matching learner's knowledge level
+    @Query("SELECT l FROM Lesson l WHERE l.course.courseId = :courseId " +
+            "AND l.difficultyLevel = :difficultyLevel " +
+            "ORDER BY l.lessonId ASC")
+    List<Lesson> findByCourseAndDifficulty(
+            @Param("courseId") Long courseId,
+            @Param("difficultyLevel") String difficultyLevel);
+
+    // NEW: Get lessons up to learner's level
+    @Query("SELECT l FROM Lesson l WHERE l.course.courseId = :courseId " +
+            "AND (" +
+            "  (:knowledgeLevel = 'beginner' AND l.difficultyLevel = 'beginner') OR " +
+            "  (:knowledgeLevel = 'intermediate' AND l.difficultyLevel IN ('beginner', 'intermediate')) OR " +
+            "  (:knowledgeLevel = 'advanced' AND l.difficultyLevel IN ('beginner', 'intermediate', 'advanced'))" +
+            ") " +
+            "ORDER BY " +
+            "  CASE l.difficultyLevel " +
+            "    WHEN 'beginner' THEN 1 " +
+            "    WHEN 'intermediate' THEN 2 " +
+            "    WHEN 'advanced' THEN 3 " +
+            "  END, " +
+            "  l.lessonId ASC")
+    List<Lesson> findLessonsForKnowledgeLevel(
+            @Param("courseId") Long courseId,
+            @Param("knowledgeLevel") String knowledgeLevel);
 }
-
-

@@ -38,8 +38,13 @@ public class SecurityConfig {
                                 "/files/**",
                                 "/enrollments/enroll/**",
                                 "/enrollments/my**",
+                                "/enrollments/quiz",
                                 "/activity/complete/**",
-                                "/recommendations/**"
+                                "/activity/completed/my",
+                                "/recommendations/**",
+                                "/lessons/update-level/**",
+                                "/lessons/recommend-next/**",
+                                "/lessons/personalized/**"
 
                         ).permitAll()
 

@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "lesson")
 public class Lesson {
 
     @Id
@@ -16,12 +17,12 @@ public class Lesson {
 
     private String pdfPath;
     private String videoPath;
-
-    // NEW: Add YouTube link field
     private String youtubeLink;
-
-    // NEW: Add video source type (none, upload, youtube)
     private String videoSource;
+
+    // NEW: Difficulty level for adaptive learning
+    @Column(name = "difficulty_level")
+    private String difficultyLevel = "beginner"; // beginner/intermediate/advanced
 
     @ManyToOne
     @JoinColumn(name = "course_id")
@@ -29,16 +30,20 @@ public class Lesson {
 
     // ===== Constructors =====
     public Lesson() {
-        this.videoSource = "none"; // Default value
+        this.videoSource = "none";
+        this.difficultyLevel = "beginner";
     }
 
-    public Lesson(String lessonName, String lessonContent, String pdfPath, String videoPath, String youtubeLink, String videoSource, Course course) {
+    public Lesson(String lessonName, String lessonContent, String pdfPath,
+                  String videoPath, String youtubeLink, String videoSource,
+                  String difficultyLevel, Course course) {
         this.lessonName = lessonName;
         this.lessonContent = lessonContent;
         this.pdfPath = pdfPath;
         this.videoPath = videoPath;
         this.youtubeLink = youtubeLink;
         this.videoSource = videoSource != null ? videoSource : "none";
+        this.difficultyLevel = difficultyLevel != null ? difficultyLevel : "beginner";
         this.course = course;
     }
 
@@ -83,7 +88,6 @@ public class Lesson {
         this.videoPath = videoPath;
     }
 
-    // NEW: YouTube link getter and setter
     public String getYoutubeLink() {
         return youtubeLink;
     }
@@ -92,7 +96,6 @@ public class Lesson {
         this.youtubeLink = youtubeLink;
     }
 
-    // NEW: Video source getter and setter
     public String getVideoSource() {
         return videoSource;
     }
@@ -101,11 +104,29 @@ public class Lesson {
         this.videoSource = videoSource != null ? videoSource : "none";
     }
 
+    public String getDifficultyLevel() {
+        return difficultyLevel;
+    }
+
+    public void setDifficultyLevel(String difficultyLevel) {
+        this.difficultyLevel = difficultyLevel != null ? difficultyLevel : "beginner";
+    }
+
     public Course getCourse() {
         return course;
     }
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    // Helper method to get difficulty as numeric value
+    public int getDifficultyValue() {
+        return switch (difficultyLevel.toLowerCase()) {
+            case "beginner" -> 1;
+            case "intermediate" -> 2;
+            case "advanced" -> 3;
+            default -> 1;
+        };
     }
 }

@@ -12,88 +12,72 @@ public class LearnerProfile {
     private Long profileId;
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    @JoinColumn(name = "user_id", unique = true)
     private User user;
 
-    @Column(name = "learning_style", nullable = false)
-    private String learningStyle = "VISUAL"; // must match DB CHECK
-
-    @Column(name = "preferred_content_type")
+    private String learningStyle;
+    private String knowledgeLevel;
     private String preferredContentType;
 
-    @Column(name = "knowledge_level")
-    private String knowledgeLevel = "BEGINNER";
-
     @Column(name = "avg_score")
-    private Double avgScore = 0.0;
+    private Integer avgScore;
 
-    @Column(name = "total_time_spent")
-    private Integer totalTimeSpent = 0;
+    private Integer totalTimeSpent;
 
-    // ===== Constructors =====
-    public LearnerProfile() {}
+    // NEW FIELD: Track total lessons completed
+    @Column(name = "total_lessons_completed")
+    private Integer totalLessonsCompleted = 0;
+
+    // Constructors
+    public LearnerProfile() {
+        this.totalLessonsCompleted = 0;
+        this.avgScore = 0;
+    }
 
     public LearnerProfile(User user) {
         this.user = user;
+        this.totalLessonsCompleted = 0;
+        this.avgScore = 0;
     }
 
-    // ===== Getters & Setters =====
-    public Long getProfileId() {
-        return profileId;
+    // Getters and Setters
+    public Long getProfileId() { return profileId; }
+    public void setProfileId(Long profileId) { this.profileId = profileId; }
+
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
+
+    public String getLearningStyle() { return learningStyle; }
+    public void setLearningStyle(String learningStyle) { this.learningStyle = learningStyle; }
+
+    public String getKnowledgeLevel() { return knowledgeLevel; }
+    public void setKnowledgeLevel(String knowledgeLevel) { this.knowledgeLevel = knowledgeLevel; }
+
+    public String getPreferredContentType() { return preferredContentType; }
+    public void setPreferredContentType(String preferredContentType) { this.preferredContentType = preferredContentType; }
+
+    public Integer getAvgScore() { return avgScore; }
+    public void setAvgScore(Integer avgScore) { this.avgScore = avgScore; }
+
+    public Integer getTotalTimeSpent() { return totalTimeSpent; }
+    public void setTotalTimeSpent(Integer totalTimeSpent) { this.totalTimeSpent = totalTimeSpent; }
+
+    // NEW GETTERS AND SETTERS
+    public Integer getTotalLessonsCompleted() {
+        return totalLessonsCompleted != null ? totalLessonsCompleted : 0;
     }
 
-    public User getUser() {
-        return user;
+    public void setTotalLessonsCompleted(Integer totalLessonsCompleted) {
+        this.totalLessonsCompleted = totalLessonsCompleted != null ? totalLessonsCompleted : 0;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    // Helper method to get user ID
+    public Long getUserId() {
+        return user != null ? user.getUserId() : null;
     }
 
-    public String getLearningStyle() {
-        return learningStyle;
-    }
-
-    public void setLearningStyle(String learningStyle) {
-        this.learningStyle = learningStyle;
-    }
-
-    public String getPreferredContentType() {
-        return preferredContentType;
-    }
-
-    public void setPreferredContentType(String preferredContentType) {
-        this.preferredContentType = preferredContentType;
-    }
-
-
-    public String getKnowledgeLevel() {
-        return knowledgeLevel;
-    }
-
-    public void setKnowledgeLevel(String knowledgeLevel) {
-        this.knowledgeLevel = knowledgeLevel;
-    }
-
-    public Double getAvgScore() {
-        return avgScore;
-    }
-
-    public void setAvgScore(Double avgScore) {
-        this.avgScore = avgScore;
-    }
-
-    public Integer getTotalTimeSpent() {
-        return totalTimeSpent;
-    }
-
-    public void setTotalTimeSpent(Integer totalTimeSpent) {
-        this.totalTimeSpent = totalTimeSpent;
-    }
-
-    // ===== Helpers =====
-    public void addTime(int minutes) {
-        if (totalTimeSpent == null) totalTimeSpent = 0;
-        this.totalTimeSpent += minutes;
+    // Helper method to increment lessons completed
+    public void incrementLessonsCompleted() {
+        this.totalLessonsCompleted = getTotalLessonsCompleted() + 1;
     }
 }

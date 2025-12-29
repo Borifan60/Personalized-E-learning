@@ -17,7 +17,7 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
     Optional<Enrollment> findByUserAndCourse(User user, Course course);
 
-    // ✅ RETURN DTO (NOT ENTITY)
+    // ✅ RETURN DTO (NOT ENTITY) - For getting course details
     @Query("""
         SELECT new com.example.demo.dto.EnrolledCourseDTO(
             c.courseId,
@@ -28,4 +28,12 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
         WHERE e.user.id = :userId
     """)
     List<EnrolledCourseDTO> findCoursesByUserId(@Param("userId") Long userId);
+
+    // ✅ RETURN ONLY COURSE IDs - For quick enrollment checks
+    @Query("SELECT e.course.courseId FROM Enrollment e WHERE e.user.id = :userId")
+    List<Long> findCourseIdsByUserId(@Param("userId") Long userId);
+
+    // ✅ CHECK IF ENROLLED IN SPECIFIC COURSE
+    @Query("SELECT COUNT(e) > 0 FROM Enrollment e WHERE e.user.id = :userId AND e.course.courseId = :courseId")
+    boolean existsByUserIdAndCourseId(@Param("userId") Long userId, @Param("courseId") Long courseId);
 }
